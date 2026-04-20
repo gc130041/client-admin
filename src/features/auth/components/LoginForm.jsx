@@ -1,47 +1,71 @@
-export const LoginForm = ({ onForgotPassword }) => {
-    return (
-        <form className="space-y-5">
-            <div>
-                {/* Cambié htmlFor por className ya que aquí van los estilos */}
-                <label className="block text-sm font-medium text-gray-800 mb-1.5">
-                    Email o Usuario
-                </label>
+import React from 'react';
 
-                {/* Los inputs deben ser de una sola etiqueta con cierre /> */}
-                <input 
-                    type="text"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-                />
-            </div>
+export const LoginForm = () => {
+  return (
+    <div className="w-full">
+      {/* Título de la tarjeta */}
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-main-blue mb-3">
+          Iniciar Sesión
+        </h2>
+        {/* Línea verde separadora */}
+        <div className="w-full h-0.5 bg-green-500"></div>
+      </div>
 
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Contraseña
-                </label>
-                    
-                <input 
-                    type="password"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-                />
-            </div>
+      {/* Formulario */}
+      <form className="space-y-4">
+        {/* Input: Nombre o Correo */}
+        <div>
+          <label className="block text-sm font-bold text-main-blue mb-1">
+            Nombre o Correo
+          </label>
+          <input 
+            type="text" 
+            placeholder="Ingrese su usuario" 
+            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-main-blue focus:border-main-blue transition-colors"
+          />
+        </div>
 
-            {/* Agregamos la funcionalidad "¿Olvidaste tu contraseña?" */}
-            <div className="flex justify-end">
-                <button
-                    type="button"
-                    onClick={onForgotPassword}
-                    className="text-sm font-medium text-blue-600 hover:text-blue-500 hover:underline"
-                >
-                    ¿Olvidaste tu contraseña?
-                </button>
-            </div>
+        {/* Input: Contraseña */}
+        <div>
+          <label className="block text-sm font-bold text-main-blue mb-1">
+            Contraseña
+          </label>
+          <input 
+            type="password" 
+            placeholder="******" 
+            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-main-blue focus:border-main-blue transition-colors"
+          />
+        </div>
 
-            <button 
-                type="submit"
-                className="w-full bg-main-blue hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-200 text-sm"
-            >
-                Iniciar Sesión
-            </button>
-        </form>
-    );
+        {/* Link: Olvidaste contraseña */}
+        <div className="flex justify-end pt-1">
+          <a href="#" className="text-xs text-gray-500 underline hover:text-main-blue transition-colors">
+            ¿Olvidaste tu contraseña?
+          </a>
+        </div>
+
+        {/* --- BOTONES ACTUALIZADOS --- */}
+        <div className="pt-4 space-y-3">
+          
+          {/* Botón Azul (Texto actualizado) */}
+          <button 
+            type="button" 
+            className="w-full bg-main-blue text-white font-semibold py-2.5 rounded-md hover:bg-[#062453] transition-colors text-sm"
+          >
+            Iniciar Sesión
+          </button>
+          
+          {/* Botón Rojo (Volver) - Lo mantuve ya que no indicaste quitarlo */}
+          <button 
+            type="button" 
+            className="w-full bg-white text-red-600 font-semibold py-2.5 rounded-md border border-red-600 hover:bg-red-50 transition-colors text-sm"
+          >
+            Volver
+          </button>
+
+        </div>
+      </form>
+    </div>
+  );
 };

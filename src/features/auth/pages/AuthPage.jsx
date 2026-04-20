@@ -1,53 +1,33 @@
-import { useState } from "react";
-import { LoginForm } from "../components/LoginForm";
-import { ForgotPasswordForm } from "../components/ForgotPasswordForm";
+import React from 'react';
+import { LoginForm } from '../components/LoginForm';
 
-const AuthPage = () => {
-    const [isLogin, setIsLogin] = useState(true);
-    const [isForgot, setIsForgot] = useState(false);
+export const AuthPage = () => {
+  return (
+    // Contenedor principal: Ocupa toda la pantalla con fondo gris claro
+    <div className="min-h-screen flex flex-col bg-slate-50 font-sans">
+      
+      {/* --- HEADER (Barra de navegación) --- */}
+      <header className="bg-white flex justify-between items-center px-8 py-4 shadow-sm relative">
+        <h1 className="text-xl font-bold text-main-blue tracking-wide">
+          TRANSMETRO CONECTA
+        </h1>
+        <button className="border border-gray-300 text-gray-700 px-4 py-1.5 rounded text-sm font-medium hover:bg-gray-50 transition-colors">
+          Inicio
+        </button>
+        {/* Línea verde gruesa debajo del header */}
+        <div className="absolute bottom-0 left-0 w-full h-1.5 bg-green-500"></div>
+      </header>
 
-    return(
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-            <div className="w-full max-w-xl bg-white 
-                rounded-xl shadow-lg border border-gray-200 p-6 md:p-10">
-                    
-                <div className="flex justify-center mb-6">
-                    <img
-                        src="/src/assets/img/kinal_sports.png"
-                        alt="Kinal Sport"
-                        className="h-20 w-auto"
-                    />
-                </div>
+      {/* --- CONTENIDO PRINCIPAL --- */}
+      <main className="flex-grow flex items-center justify-center p-4">
+        {/* Tarjeta contenedora blanca con animación de entrada */}
+        <div className="bg-white w-full max-w-md rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.05)] p-8 border border-gray-100 animate-fadeIn">
+          
+          {/* Aquí inyectamos el componente del formulario */}
+          <LoginForm />
 
-                <div className="text-center mb-6">
-                    <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
-                        {isForgot
-                            ? "Recuperar Contraseña"
-                            : isLogin
-                            ? "Bienvenido de Nuevo"
-                            : "Crear Cuenta"
-                        } 
-                    </h1>
-
-                    <p className="text-gray-600 text-base max-w-md mx-auto">
-                        {isForgot
-                            ? "Ingresa tu correo para recuperar tu contraseña"
-                            : isLogin
-                            ? "Ingresa a tu cuenta de administrador de kinal Sports"
-                            : "Registrate como administrador de kinal Sports"    
-                        }
-                    </p>
-                </div>
-
-                {isForgot ? (
-                    <ForgotPasswordForm onSwitch={() => setIsForgot(false)} />
-                ) : (
-                    <LoginForm onForgotPassword={() => setIsForgot(true)} />
-                )}
-
-            </div>
-        </div>   
-    );
+        </div>
+      </main>
+    </div>
+  );
 };
-
-export { AuthPage };
