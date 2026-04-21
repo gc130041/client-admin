@@ -1,71 +1,79 @@
-import React from 'react';
-
-export const LoginForm = () => {
-  return (
-    <div className="w-full">
-      {/* Título de la tarjeta */}
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-main-blue mb-3">
-          Iniciar Sesión
-        </h2>
-        {/* Línea verde separadora */}
-        <div className="w-full h-0.5 bg-green-500"></div>
-      </div>
-
-      {/* Formulario */}
-      <form className="space-y-4">
-        {/* Input: Nombre o Correo */}
-        <div>
-          <label className="block text-sm font-bold text-main-blue mb-1">
-            Nombre o Correo
-          </label>
-          <input 
-            type="text" 
-            placeholder="Ingrese su usuario" 
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-main-blue focus:border-main-blue transition-colors"
-          />
-        </div>
-
-        {/* Input: Contraseña */}
-        <div>
-          <label className="block text-sm font-bold text-main-blue mb-1">
-            Contraseña
-          </label>
-          <input 
-            type="password" 
-            placeholder="******" 
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-main-blue focus:border-main-blue transition-colors"
-          />
-        </div>
-
-        {/* Link: Olvidaste contraseña */}
-        <div className="flex justify-end pt-1">
-          <a href="#" className="text-xs text-gray-500 underline hover:text-main-blue transition-colors">
-            ¿Olvidaste tu contraseña?
-          </a>
-        </div>
-
-        {/* --- BOTONES ACTUALIZADOS --- */}
-        <div className="pt-4 space-y-3">
-          
-          {/* Botón Azul (Texto actualizado) */}
-          <button 
-            type="button" 
-            className="w-full bg-main-blue text-white font-semibold py-2.5 rounded-md hover:bg-[#062453] transition-colors text-sm"
-          >
-            Iniciar Sesión
-          </button>
-          
-          {/* Botón Rojo (Volver) - Lo mantuve ya que no indicaste quitarlo */}
-          <button 
-            type="button" 
-            className="w-full bg-white text-red-600 font-semibold py-2.5 rounded-md border border-red-600 hover:bg-red-50 transition-colors text-sm"
-          >
-            Volver
-          </button>
-
-        </div>
-      </form>
-    </div>
-  );
+import { useAuthStore } from '../store/authStore.js';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+ 
+export const LoginForm = ({ onForgot }) => {
+ 
+    const navigate = useNavigate();
+ 
+    const login = useAuthStore((state) => state.login);
+    const loading = useAuthStore((state) => state.loading);
+    const error = useAuthStore((state) => state.error);
+ 
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+ 
+    const onSumnit = async (data) =>{
+        const res = await login(data);
+        if(res.success){
+            navigate("/dashboard")
+            toast.success("Bienvenido de nuevo!")
+        }
+    };
+ 
+    return (
+        <form onSubmit={handleSubmit(onSumnit)} className="space-y-5">
+            {/* Sección de de email o usuario */}
+            <div>
+                <label className="block text-sm font-medium text-gray-800 mb-1.5">
+                    Email o Usuario
+                </label>
+                <input
+                    type="text"
+                    placeholder="correo@ejemplo.com o usuario"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    {...register("emailOrUsername", {
+                        required: "El correo o el usuario es obligatorio"
+                    })}
+                />
+            </div>
+ 
+            {/* Sección de de contraseña */}
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Contraseña
+                </label>
+                <input
+                    type="password"
+                    placeholder="••••••••"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    {...register("password", {
+                        required: "La contraseña es obligatoria",
+                    })}
+                />
+            </div>
+ 
+            <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-main-blue hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-200 text-sm"
+            >
+                {loading ? "Iniciando...": "Iniciar Sesión"}
+            </button>
+ 
+            <p className="text-center text-sm">
+                <button
+                    type="button"
+                    onClick={onForgot}
+                    className="text-main-blue hover:underline"
+                >
+                ¿Olvidaste tu contraseña?
+                </button>
+            </p>
+        </form>
+    );
 };
