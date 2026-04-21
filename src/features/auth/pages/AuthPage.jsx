@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LoginForm } from "../components/LoginForm";
-import kinalSportsImg from "../../../assets/img/kinal_sports.png";
+import kinalSportsLogo from "../../../assets/img/kinal_sports.png";
 
 /*
   AuthPage.jsx: Este componente representa la página de autenticación, 
@@ -25,7 +25,7 @@ const AuthPage = () => {
         {/* Logo */}
         <div className="flex justify-center mb-6">
           <img
-            src={kinalSportsImg}
+            src={kinalSportsLogo}
             alt="Kinal Sport"
             className="h-20 w-auto"
           />

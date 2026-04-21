@@ -1,10 +1,10 @@
-import { AuthPage } from '../features/auth/pages/AuthPage';
+import { AppRoutes } from './router/AppRoutes';
 import './App.css'; // Mantiene tus estilos globales
 
 function App() {
   return (
     <>
-      <AuthPage />
+      <AppRoutes />
     </>
   );
 }
