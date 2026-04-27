@@ -42,13 +42,14 @@ axiosAuth.interceptors.request.use((config) => {
 
 // Configuración de interceptores para la administración (igual funcionalidad para enviar token)
 axiosAdmin.interceptors.request.use((config) => {
-    config._axiosClient = "admin";
-    const token = useAuthStore.getState().token;
-
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
+  // Tag del cliente para que el interceptor de refresh reintente
+  // en el mismo "backend" (auth vs admin).
+  config._axiosClient = "admin";
+  const token = useAuthStore.getState().token;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 // Configuración de documentación de axios
