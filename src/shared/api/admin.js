@@ -67,4 +67,3 @@ export const getAllReservations = async () => {
 export const confirmReservation = async (id) => {
     return await axiosAdmin.put(`/reservations/${id}/confirm`);
 };
- 

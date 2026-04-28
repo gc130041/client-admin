@@ -1,20 +1,22 @@
 FROM node:20-alpine AS build
-
-# Argumentos de construcción para que Vite los detecte al empaquetar 
-ARG VITE_AUTH_URL
-ARG VITE_ADMIN_URL
-
-ENV VITE_AUTH_URL=$VITE_AUTH_URL
-ENV VITE_ADMIN_URL=$VITE_ADMIN_URL
-
 WORKDIR /app
+
+RUN corepack enable
+
 COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm && pnpm install
+RUN pnpm install --frozen-lockfile
 
 COPY . .
+
+ARG VITE_AUTH_URL=http://localhost:5065/api/v1
+ENV VITE_AUTH_URL=${VITE_AUTH_URL}
+
 RUN pnpm build
 
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
+FROM nginx:1.27-alpine AS runtime
+WORKDIR /usr/share/nginx/html
+
+COPY --from=build /app/dist .
+
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
